@@ -5,8 +5,33 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os/exec"
+	"path/filepath"
 )
 
+// support only current dir for now
+var buildDir = "."
+
+var CC = "cc"
+
 func main() {
-	fmt.Println("hello world")
+	sourceFiles, _ := filepath.Glob("*.c")
+
+	buildDir, err :=  filepath.Abs(buildDir)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	outputName := filepath.Base(buildDir)
+
+	var cmd = exec.Command(CC)
+	cmd.Args = append(cmd.Args, sourceFiles...)
+	// for _, file := range sourceFiles {
+	// 	cmd.Args = append(cmd.Args, file)
+	// }
+	cmd.Args = append(cmd.Args, "-o")
+	cmd.Args = append(cmd.Args, outputName)
+	cmd.Run()
+	fmt.Println(cmd.Args)
+	fmt.Println(cmd)
 }
