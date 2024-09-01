@@ -26,12 +26,8 @@ func main() {
 
 	var cmd = exec.Command(CC)
 	cmd.Args = append(cmd.Args, sourceFiles...)
-	// for _, file := range sourceFiles {
-	// 	cmd.Args = append(cmd.Args, file)
-	// }
 	cmd.Args = append(cmd.Args, "-o")
 	cmd.Args = append(cmd.Args, outputName)
 	cmd.Run()
-	fmt.Println(cmd.Args)
 	fmt.Println(cmd)
 }
